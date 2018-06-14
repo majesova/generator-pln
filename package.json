@@ -1,0 +1,39 @@
+{
+  "name": "generator-pln",
+  "version": "1.0.0",
+  "description": "generador pln aspnet boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronymaychan/generator-pln.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "angular",
+    "component",
+    "javascript",
+    "builder",
+    "scaffold",
+    "generator"
+  ],
+  "author": "Rony May <ronymaychan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ronymaychan/generator-pln/issues"
+  },
+  "homepage": "https://github.com/ronymaychan/generator-pln#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "decamelize": "^2.0.0",
+    "uppercamelcase": "^3.0.0",
+    "yeoman-generator": "^2.0.5",
+    "yosay": "^2.0.2"
+  },
+  "files": [
+    "app",
+    "router"
+  ]
+}
