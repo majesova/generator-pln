@@ -1,5 +1,5 @@
 # Generador Pln
-Pln aspnet boiler plate
+Pln aspnet boilerplate
 
 # Requirements
 This is a Yeoman generator. You need to install Yeoman, NodeJS and npm to install the generator and its dependencies. Make sure you have all installed globally.
