@@ -34,7 +34,6 @@ module.exports = class extends Generator{
 		var files = [];
 
 
-        files.push({source: '.gitignore'});
         files.push({source: 'CHANGELOG.md'});
         files.push({source: 'LICENSE'});
         files.push({source: 'README.md'});
