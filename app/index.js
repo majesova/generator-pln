@@ -39,7 +39,6 @@ module.exports = class extends Generator{
         files.push({source: 'README.md'});
         files.push({source: 'angular/.angular-cli.json'});
         files.push({source: 'angular/.editorconfig'});
-        files.push({source: 'angular/.gitignore'});
         files.push({source: 'angular/.npmrc'});
         files.push({source: 'angular/app.config'});
         files.push({source: 'angular/Dockerfile'});
@@ -243,7 +242,6 @@ module.exports = class extends Generator{
         files.push({source: 'angular/src/shared/service-proxies/service-proxy.module.ts'});
         files.push({source: 'angular/src/shared/session/app-session.service.ts'});
         files.push({source: 'aspnet-core/.gitattributes'});
-        files.push({source: 'aspnet-core/.gitignore'});
         files.push({source: 'aspnet-core/NuGet.Config'});
         files.push({source: 'aspnet-core/Plenumsoft.sln'});
         files.push({source: 'aspnet-core/build/build-with-ng.ps1'});
