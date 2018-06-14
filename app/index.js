@@ -22,6 +22,7 @@ module.exports = class extends Generator{
                 this.props = answers;
                 this.dataTemplate = {};
                 this.dataTemplate.projectName = answers.projectName;
+				this.destinationRoot(answers.projectName);
           });
     }
     configuring(){
