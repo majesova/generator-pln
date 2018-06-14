@@ -25,6 +25,8 @@ $ yo pln
 - Open the Package Manager Console and run an Update-Database command to create your database (ensure that the Default project is selected as .EntityFrameworkCore in the Package Manager Console window).
 - Run the application. It will show swagger-ui if it is successful:
 
+![alt text](https://github.com/ronymaychan/generator-pln/blob/master/images/Screenshot_1.png "PLN Swagger")
+
 # What does this generator do?
 
 
