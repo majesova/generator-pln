@@ -1,6 +1,6 @@
 {
   "name": "generator-pln",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "generador pln aspnet boilerplate",
   "main": "index.js",
   "scripts": {

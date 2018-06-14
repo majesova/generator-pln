@@ -10,7 +10,7 @@ Second, install Yeoman. More information about Yeoman: http://yeoman.io/
 
 # Installation
 ```
-$ npm install -g pln
+$ npm install -g generator-pln
 ```
 
 # Usage
