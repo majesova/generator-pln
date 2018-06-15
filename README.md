@@ -18,9 +18,7 @@ $ npm install -g generator-pln
 $ yo pln
 ```
 
-# Get started
-
-#### ASP.NET Core Application
+# ASP.NET Core Application
 
 - Open your solution in Visual Studio 2017 v15.3.5+ and build the solution.
 - Select the 'Web.Host' project as the startup project.
@@ -30,7 +28,7 @@ $ yo pln
 
 ![alt text](https://github.com/ronymaychan/generator-pln/blob/master/images/Screenshot_1.png "PLN Swagger")
 
-#### Angular Application
+# Angular Application
 
 - Open a command prompt, navigate to the angular folder
 - In your opened command prompt, run the following command:
