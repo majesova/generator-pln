@@ -470,6 +470,10 @@ module.exports = class extends Generator{
             var destination = item.source.replace(/Plenumsoft/g, this.dataTemplate.projectName);
             this.fs.copyTpl(this.templatePath( item.source ),this.destinationPath(destination), this.dataTemplate);  
         });
+		
+		this.fs.copyTpl(this.templatePath( ".npmignore" ),this.destinationPath(".ignore"), this.dataTemplate);  
+		this.fs.copyTpl(this.templatePath( "angular/.npmignore" ),this.destinationPath("angular/.ignore"), this.dataTemplate);  
+		this.fs.copyTpl(this.templatePath( "aspnet-core/.npmignore" ),this.destinationPath("aspnet-core/.ignore"), this.dataTemplate);  
 	}
     conflicts (){
 		this.log('Do conflicts...');
