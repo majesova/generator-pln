@@ -17,7 +17,10 @@ $ npm install -g generator-pln
 ```
 $ yo pln
 ```
-# Pln Quick Start
+
+# Get started
+
+#### ASP.NET Core Application
 
 - Open your solution in Visual Studio 2017 v15.3.5+ and build the solution.
 - Select the 'Web.Host' project as the startup project.
@@ -27,44 +30,20 @@ $ yo pln
 
 ![alt text](https://github.com/ronymaychan/generator-pln/blob/master/images/Screenshot_1.png "PLN Swagger")
 
-# What does this generator do?
+#### Angular Application
 
+- Open a command prompt, navigate to the angular folder
+- In your opened command prompt, run the following command:
+```
+$ npm start
+```
+- Once the application has compiled, you can go to http://localhost:4200 in your browser. You will see the login page
 
-#### Models
-A generator for a Models.
+![alt text](https://github.com/ronymaychan/generator-pln/blob/master/images/Screenshot_2.png "Angular app")
 
-Includes:
-- Model1
-- Model2
+# Login
 
-#### Controllers
-A generator for a Controller.
-
-Includes:
-- controller1
-- controller2
-
-#### Components
-A generator for a Components.
-
-Includes:
-- component1
-- component2
-
-#### Services
-A generator for a Components.
-
-Includes:
-- service1
-- service2
-
-#### Directives
-A generator for a Components.
-
-Includes:
-- directive1
-- directive2
-
+You can now login to the application using the default credentials. The default username is 'admin' and the password is '123qwe'.
 
 # Credits
 
