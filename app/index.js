@@ -1,39 +1,160 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
+const pluralize = require('pluralize');
 
 module.exports = class extends Generator{
+
     initializing (){
-		this.log('Initializing...');
+      
+      this.dataTemplate = {};
+
+      this.log(
+        yosay(`Welcome to the perfect ${chalk.red('generator-pln')} generator!`)
+      );
     }
+
     prompting() {
-        this.log('Do prompting...');
-        this.log(
-            yosay(`Welcome to the perfect ${chalk.red('generator-pln')} generator!`)
-          );
-
-        return this.prompt([{
-            type    : 'input',
-            name    : 'projectName',
-            message : 'Your project name:',
-            default : 'Plenumsoft',
-            store: true
-          }]).then((answers) => {
-                this.props = answers;
-                this.dataTemplate = {};
-                this.dataTemplate.projectName = answers.projectName;
-				this.destinationRoot(answers.projectName);
-          });
+      return this.prompt([{
+        type    : 'input',
+        name    : 'projectName',
+        message : 'Your project name',
+        default : 'Plenumsoft',
+        store : true
+      }, {
+        type: 'list',
+        name: 'type',
+        message:'What action do you want to take?',
+        choices:[
+          {
+            name: 'Create a project Application',
+            value: 'aspnet'
+          },
+          {
+            name: 'Create a basic catalog',
+            value: 'catalog'
+          }
+        ]
+      }, {
+        type: 'input',
+        name: 'catalogName',
+        message: 'Your catalog name:',
+        default: 'Category',
+        when: function(opts){
+          return opts.type === 'catalog';
+        },
+        store: true
+      }
+    ]).then((answers) => {
+        this.dataTemplate.projectName = answers.projectName;
+        this.dataTemplate.type = answers.type;
+        if(answers.catalogName)
+          this.dataTemplate.catalogName = answers.catalogName;
+      });
     }
+
+
     configuring(){
-		this.log('Do configuring...');
+		  
     }
+
     writing (){
-		this.log('Do writing...');
-		
-		var files = [];
+      if(this.dataTemplate.type === 'aspnet'){
+        this._createProject();
+      }else{
+        this._CreateCatalog();
+      }
+    }
+
+    conflicts (){
+
+    }
+
+    install (){
+      if(this.dataTemplate.type === 'aspnet'){
+        var angularRoot = process.cwd() + '/angular';
+          process.chdir(angularRoot);
+          this.installDependencies({
+            npm: true,
+            bower: false,
+            yarn: false
+          });
+      }
+    }
+
+    end (){
+		  
+    }
+
+    _CreateCatalog(){
+
+      var plural = pluralize( this.dataTemplate.catalogName) ;
+      this.dataTemplate.catalogNamePluralize = plural;
+      this.dataTemplate.catalogNamePluralizeLower  = plural.toLowerCase();
+      this.dataTemplate.catalogNameLower  = this.dataTemplate.catalogName.toLowerCase();      
+
+      this.fs.copyTpl(
+          this.templatePath( 'catalog' + '/Domain/Category.cs' ),
+          this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Core/Domain/'+ this.dataTemplate.catalogName +'.cs'), this.dataTemplate);
+
+          this.fs.copyTpl(
+            this.templatePath( 'catalog' + '/Mapping/CategoryEntityConfiguration.cs' ),
+            this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.EntityFrameworkCore/EntityFrameworkCore/Mapping/'+ this.dataTemplate.catalogName +'EntityConfiguration.cs'), this.dataTemplate);
 
 
+            this.fs.copyTpl(
+              this.templatePath( 'catalog' + '/Application/CategoryAppService.cs' ),
+              this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Application/'+ this.dataTemplate.catalogNamePluralize+ '/' + this.dataTemplate.catalogName +'AppService.cs'), this.dataTemplate);
+
+            this.fs.copyTpl(
+              this.templatePath( 'catalog' + '/Application/ICategoryAppService.cs' ),
+              this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Application/'+ this.dataTemplate.catalogNamePluralize+ '/I' + this.dataTemplate.catalogName +'AppService.cs'), this.dataTemplate);
+
+
+            this.fs.copyTpl(
+              this.templatePath( 'catalog' + '/Application/Dto/CategoryDto.cs' ),
+              this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Application/'+ this.dataTemplate.catalogNamePluralize+ '/Dto/' + this.dataTemplate.catalogName +'Dto.cs'), this.dataTemplate);
+
+            this.fs.copyTpl(
+              this.templatePath( 'catalog' + '/Application/Dto/CategoryInputDto.cs' ),
+              this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Application/'+ this.dataTemplate.catalogNamePluralize+ '/Dto/' + this.dataTemplate.catalogName +'InputDto.cs'), this.dataTemplate);
+
+            this.fs.copyTpl(
+              this.templatePath( 'catalog' + '/Application/Dto/CategoryCreateDto.cs' ),
+              this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Application/'+ this.dataTemplate.catalogNamePluralize+ '/Dto/' + this.dataTemplate.catalogName +'CreateDto.cs'), this.dataTemplate);
+
+            this.fs.copyTpl(
+              this.templatePath( 'catalog' + '/Application/Dto/CategoryUpdateDto.cs' ),
+              this.destinationPath('aspnet-core/src/'+ this.dataTemplate.projectName +'.Application/'+ this.dataTemplate.catalogNamePluralize+ '/Dto/' + this.dataTemplate.catalogName +'UpdateDto.cs'), this.dataTemplate);
+
+
+              // angular
+              this.fs.copyTpl(
+                this.templatePath( 'catalog' + '/Angular/categories/categories.component.html' ),
+                this.destinationPath('angular/src/app/'+ this.dataTemplate.catalogNamePluralize.toLowerCase() +'/'+ this.dataTemplate.catalogNamePluralize.toLowerCase()+ '.component.html'), this.dataTemplate);
+              this.fs.copyTpl(
+                this.templatePath( 'catalog' + '/Angular/categories/categories.component.ts' ),
+                this.destinationPath('angular/src/app/'+ this.dataTemplate.catalogNamePluralize.toLowerCase() +'/'+ this.dataTemplate.catalogNamePluralize.toLowerCase()+ '.component.ts'), this.dataTemplate);
+
+
+              this.fs.copyTpl(
+                this.templatePath( 'catalog' + '/Angular/categories/create-category/create-category.component.html' ),
+                this.destinationPath('angular/src/app/'+ this.dataTemplate.catalogNamePluralize.toLowerCase() + '/create-' + this.dataTemplate.catalogName.toLowerCase() + '/create-' + this.dataTemplate.catalogName.toLowerCase() + '.component.html'), this.dataTemplate);
+              this.fs.copyTpl(
+                this.templatePath( 'catalog' + '/Angular/categories/create-category/create-category.component.ts' ),
+                this.destinationPath('angular/src/app/'+ this.dataTemplate.catalogNamePluralize.toLowerCase() + '/create-' + this.dataTemplate.catalogName.toLowerCase() + '/create-' + this.dataTemplate.catalogName.toLowerCase() + '.component.ts'), this.dataTemplate);
+
+
+              this.fs.copyTpl(
+                this.templatePath( 'catalog' + '/Angular/categories/edit-category/edit-category.component.html' ),
+                this.destinationPath('angular/src/app/'+ this.dataTemplate.catalogNamePluralize.toLowerCase() + '/edit-' + this.dataTemplate.catalogName.toLowerCase() + '/edit-' + this.dataTemplate.catalogName.toLowerCase() + '.component.html'), this.dataTemplate);
+              this.fs.copyTpl(
+                this.templatePath( 'catalog' + '/Angular/categories/edit-category/edit-category.component.ts' ),
+                this.destinationPath('angular/src/app/'+ this.dataTemplate.catalogNamePluralize.toLowerCase() + '/edit-' + this.dataTemplate.catalogName.toLowerCase() + '/edit-' + this.dataTemplate.catalogName.toLowerCase() + '.component.ts'), this.dataTemplate);
+    }
+  
+    _createProject(){
+      var files = [];
         files.push({source: 'CHANGELOG.md'});
         files.push({source: 'LICENSE'});
         files.push({source: 'README.md'});
@@ -464,31 +585,16 @@ module.exports = class extends Generator{
         files.push({source: '_screenshots/ui-home.png'});
         files.push({source: '_screenshots/ui-login.png'});
         files.push({source: '_screenshots/ui-user-create-modal.png'});
-		
-		/*Creación de los archivos */
+
+        /*Creación de los archivos */
         files.forEach(item => {
-            var destination = item.source.replace(/Plenumsoft/g, this.dataTemplate.projectName);
-            this.fs.copyTpl(this.templatePath( item.source ),this.destinationPath(destination), this.dataTemplate);  
+                var destination = item.source.replace(/Plenumsoft/g, this.dataTemplate.projectName);
+                this.fs.copyTpl(this.templatePath( 'aspnet/' + item.source ),this.destinationPath(destination), this.dataTemplate);  
         });
-		
-		this.fs.copyTpl(this.templatePath( ".npmignore" ),this.destinationPath(".ignore"), this.dataTemplate);  
-		this.fs.copyTpl(this.templatePath( "angular/.npmignore" ),this.destinationPath("angular/.ignore"), this.dataTemplate);  
-		this.fs.copyTpl(this.templatePath( "aspnet-core/.npmignore" ),this.destinationPath("aspnet-core/.ignore"), this.dataTemplate);  
-	}
-    conflicts (){
-		this.log('Do conflicts...');
+                    
+        this.fs.copyTpl(this.templatePath( 'aspnet/' + ".npmignore" ),this.destinationPath(".ignore"), this.dataTemplate);  
+        this.fs.copyTpl(this.templatePath( 'aspnet/' + "angular/.npmignore" ),this.destinationPath("angular/.ignore"), this.dataTemplate);  
+        this.fs.copyTpl(this.templatePath( 'aspnet/' + "aspnet-core/.npmignore" ),this.destinationPath("aspnet-core/.ignore"), this.dataTemplate);  
     }
-    install (){
-       this.log('Do install...');
-	    var angularRoot = process.cwd() + '/angular';
-        process.chdir(angularRoot);
-        this.installDependencies({
-          npm: true,
-          bower: false,
-          yarn: false
-        });
-    }
-    end (){
-		this.log('Do end...');
-    }
+
 };

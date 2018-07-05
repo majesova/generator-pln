@@ -1,0 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <%= projectName %>.Domain
+{
+    public class <%= catalogName %> : Abp.Domain.Entities.Entity, Abp.Domain.Entities.IPassivable
+    {
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
+    }
+}

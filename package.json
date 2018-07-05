@@ -1,6 +1,6 @@
 {
   "name": "generator-pln",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "description": "generador pln aspnet boilerplate",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "decamelize": "^2.0.0",
+    "pluralize": "^7.0.0",
     "uppercamelcase": "^3.0.0",
     "yeoman-generator": "^2.0.5",
     "yosay": "^2.0.2"
